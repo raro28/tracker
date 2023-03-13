@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  influxdb:
+    image: influxdb
+    container_name: influxdb
+    restart: always
+    environment:
+      - INFLUXDB_DB=mydb
+      - INFLUXDB_ADMIN_USER=admin
+      - INFLUXDB_ADMIN_PASSWORD=adminpassword
+      - INFLUXDB_USER=myuser
+      - INFLUXDB_USER_PASSWORD=mypassword
+    ports:
+      - "8086:8086"
+      - "8082:8082"
+    volumes:
+      - ./influxdb:/var/lib/influxdb
