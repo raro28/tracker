@@ -12,10 +12,10 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{ }",
+					"raw": "{\n    \"measure\": \"blood-pressure\",\n    \"tags\": [\n        {\n            \"name\": \"location\",\n            \"value\": \"{{$randomCity}}\"\n        }\n    ],\n    \"fields\": [\n        {\n            \"name\": \"systolic\",\n            \"value\": \"{{$randomInt}}\",\n            \"type\": \"float\"\n        },\n        {\n            \"name\": \"diastolic\",\n            \"value\": \"{{$randomInt}}\",\n            \"type\": \"float\"\n        }\n    ]\n}",
 					"options": {
 						"raw": {
-							"language": "javascript"
+							"language": "json"
 						}
 					}
 				},

@@ -1,0 +1,1 @@
+export interface Field { name: string, value: string, type: 'int' | 'uint' | 'float' | 'string' | 'boolean' }
