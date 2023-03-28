@@ -7,8 +7,8 @@ import * as models from './models';
 
 dotenv.config();
 
-const writeApi = new InfluxDB({ url: process.env.URL as string, token: process.env.TOKEN }).getWriteApi(process.env.ORG as string, process.env.BUCKET as string, 'ns');
-writeApi.useDefaultTags({ location: hostname() });
+const writeApi = new InfluxDB({ url: process.env.URL as string, token: process.env.TOKEN })
+  .getWriteApi(process.env.ORG as string, process.env.BUCKET as string, 'ns');
 
 const app = express();
 
