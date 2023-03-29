@@ -1,28 +1,28 @@
 version: '3'
 services:
   influxdb:
-    image: influxdb:2.6.1
+    image: influxdb:${INFLUXDB_VERSION}
     environment:
-      - DOCKER_INFLUXDB_INIT_MODE=setup
-      - DOCKER_INFLUXDB_INIT_USERNAME=myuser
-      - DOCKER_INFLUXDB_INIT_PASSWORD=mypassword
-      - DOCKER_INFLUXDB_INIT_ORG=myorg
-      - DOCKER_INFLUXDB_INIT_BUCKET=mybucket
-      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=my-super-secret-auth-token
+      - DOCKER_INFLUXDB_INIT_MODE=${INIT_MODE}
+      - DOCKER_INFLUXDB_INIT_USERNAME=${INIT_USERNAME}
+      - DOCKER_INFLUXDB_INIT_PASSWORD=${INIT_PASSWORD}
+      - DOCKER_INFLUXDB_INIT_ORG=${INIT_ORG}
+      - DOCKER_INFLUXDB_INIT_BUCKET=${INIT_BUCKET}
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${INIT_ADMIN_TOKEN}
     ports:
-      - "8086:8086"
-      - "8082:8082"
+      - ${INFLUXDB_PORT}:${INFLUXDB_PORT}
     volumes:
-      - ./influxdb:/var/lib/influxdb
+      - ${DATA_PATH}/influxdb:/var/lib/influxdb
 
   api:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      image: tracker-api:v1.0.0
+    image: omv.lan:5000/lan/tracker-api:${TRACKERAPI_VERSION}
     ports:
-      - "8080:8080"
+      - 8100:${API_PORT}
     depends_on:
       - influxdb
-    volumes:
-      - ./.env:/app/.env:ro
+    environment:
+      - URL=http://influxdb:${INFLUXDB_PORT}
+      - PORT=${API_PORT}
+      - TOKEN=${INIT_ADMIN_TOKEN}
+      - ORG=${INIT_ORG}
+      - BUCKET=${INIT_BUCKET}
